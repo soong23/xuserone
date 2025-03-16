@@ -1,1 +1,330 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>Xboard</title><script type="module" crossorigin src="/assets/umi.js"></script></head><body><script src="./env.js"></script><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Occultum VPN - 提供安全、高效的全球网络连接服务。">
+  <meta name="keywords" content="VPN, 隐私保护, 高速网络, Occultum VPN">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/app/assets/images/global-internet.webp" as="image">
+  <title>Occultum VPN</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url('/app/assets/images/global-internet.webp') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      min-height: 100vh;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: blur(3px) brightness(0.8);
+      z-index: -1;
+    }
+    .navbar {
+      background-color: transparent;
+      max-width: 1440px;
+      margin: 25px auto;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar a.logo-link {
+      display: inline-block;
+    }
+    .navbar img {
+      height: 40px; /* 限制 Logo 高度为 40px */
+      vertical-align: middle;
+    }
+    .navbar .nav-links {
+      display: flex;
+      align-items: center;
+    }
+    .navbar a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .navbar a:hover {
+      color: #007bff;
+    }
+    .content {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .intro {
+      max-width: 1440px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #fff;
+      color: #000;
+      border-radius: 5px;
+    }
+    .intro-inner {
+      max-width: 1300px;
+      margin: 60px auto;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+    .intro img {
+      max-width: 50%;
+      height: auto;
+      border-radius: 5px;
+    }
+    .intro .text {
+      flex: 1;
+    }
+    .features {
+      max-width: 1440px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #fff;
+      color: #000;
+      border-radius: 5px;
+    }
+    .features-inner {
+      max-width: 1300px;
+      margin: 60px auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+    }
+    .feature-item {
+      padding: 10px;
+      text-align: left;
+    }
+    .feature-item h4 {
+      margin: 0 0 10px 0;
+    }
+    .feature-item li {
+      margin: 5px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    .feature-item li:before {
+      content: "✔";
+      color: #28a745;
+      position: absolute;
+      left: 0;
+    }
+    .pricing {
+      max-width: 1440px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #fff;
+      color: #000;
+      border-radius: 5px;
+      margin-bottom: 100px;
+    }
+    .pricing-inner {
+      max-width: 1300px;
+      margin: 60px auto;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px;
+    }
+    .pricing-item {
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .pricing-item h4 {
+      margin: 0 0 10px 0;
+      color: #003087;
+    }
+    .pricing-plan {
+      margin: 10px 0;
+    }
+    .pricing-plan span {
+      font-weight: bold;
+      color: #28a745;
+    }
+    .subscribe-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .subscribe-btn:hover {
+      background-color: #0056b3;
+    }
+    .login-btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .login-btn:hover {
+      background-color: #0056b3;
+    }
+    .footer {
+      background-color: #003087;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    @media (max-width: 900px) {
+      .intro {
+        padding: 40px;
+      }
+      .intro-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+      }
+      .intro img {
+        max-width: 100%;
+      }
+      .features {
+        padding: 40px;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .pricing {
+        padding: 40px;
+        margin-bottom: 50px;
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .content {
+        margin: 20px;
+        padding: 10px;
+      }
+      .login-btn, .subscribe-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+      .navbar {
+        flex-direction: column;
+        padding: 5px 10px;
+        margin: 15px auto;
+      }
+      .navbar img {
+        margin: 0 0 10px 0;
+      }
+      .navbar .nav-links {
+        flex-direction: column;
+      }
+      .navbar a {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="https://shop.occultumvpn.com/" class="logo-link">
+      <img src="/app/assets/images/occultum-logo.webp" alt="Occultum Logo">
+    </a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/app/#/login">登录</a>
+      <a href="/support">支持</a>
+      <a href="/guide">使用指南</a>
+    </div>
+  </div>
+  <div class="content">
+    <h1>欢迎使用 Occultum VPN</h1>
+    <p>安全、高效的网络服务</p>
+    <a href="/app/#/login" class="login-btn">登录</a>
+  </div>
+  <div class="intro">
+    <div class="intro-inner">
+      <img src="/app/assets/images/about-us.webp" alt="关于我们">
+      <div class="text">
+        <h3>关于我们</h3>
+        <p>Occultum VPN 提供全球范围内的安全网络连接，支持多平台，随时随地畅享无忧上网。</p>
+      </div>
+    </div>
+  </div>
+  <div class="features">
+    <div class="features-inner">
+      <h3>我们的优势</h3>
+      <div class="features-grid">
+        <div class="feature-item">
+          <h4>隐私保护</h4>
+          <ul>
+            <li>无日志政策，保护隐私</li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <h4>高速连接</h4>
+          <ul>
+            <li>全球高速服务器</li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <h4>多设备支持</h4>
+          <ul>
+            <li>多设备同步支持</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pricing">
+    <div class="pricing-inner">
+      <h2>产品套餐</h2>
+      <div class="pricing-grid">
+        <div class="pricing-item">
+          <h4>基础套餐</h4>
+          <div class="pricing-plan">
+            <p>月度订阅: <span>29 元</span></p>
+          </div>
+          <div class="pricing-plan">
+            <p>年度订阅: <span>299 元</span></p>
+          </div>
+          <a href="/app/#/login" class="subscribe-btn">立即订阅</a>
+        </div>
+        <div class="pricing-item">
+          <h4>高级套餐</h4>
+          <div class="pricing-plan">
+            <p>月度订阅: <span>59 元</span></p>
+          </div>
+          <div class="pricing-plan">
+            <p>年度订阅: <span>599 元</span></p>
+          </div>
+          <a href="/app/#/login" class="subscribe-btn">立即订阅</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2025 Occultum VPN. 联系我们: support@occultumvpn.com</p>
+  </div>
+</body>
+</html>
